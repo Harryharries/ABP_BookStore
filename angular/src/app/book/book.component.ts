@@ -39,18 +39,18 @@ export class BookComponent implements OnInit {
     });
   }
 
-    // add buildForm method
-    buildForm() {
-      this.form = this.fb.group({
-        name: [this.selectedBook.name || '', Validators.required],
-        type: [this.selectedBook.type || null, Validators.required],
-        publishDate: [
-          this.selectedBook.publishDate ? new Date(this.selectedBook.publishDate) : null,
-          Validators.required,
-        ],
-        price: [this.selectedBook.price || null, Validators.required],
-      });
-    }
+  // add buildForm method
+  buildForm() {
+    this.form = this.fb.group({
+      name: [this.selectedBook.name || '', Validators.required],
+      type: [this.selectedBook.type || null, Validators.required],
+      publishDate: [
+        this.selectedBook.publishDate ? new Date(this.selectedBook.publishDate) : null,
+        Validators.required,
+      ],
+      price: [this.selectedBook.price || null, Validators.required],
+    });
+  }
 
   createBook() {
     this.selectedBook = {} as BookDto;
