@@ -1,9 +1,13 @@
-import { ListService, PagedResultDto } from '@abp/ng.core';
+import { ListService, PagedAndSortedResultRequestDto, PagedResultDto } from '@abp/ng.core';
 import { Component, OnInit } from '@angular/core';
 import { BookService, BookDto, bookTypeOptions } from '@proxy/books';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'; // add this
 import { NgbDateNativeAdapter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
+import { Observable, take } from 'rxjs';
+import { Store } from '@ngrx/store';
+import * as BookSelectors from './store/book.selectors';
+import * as BookActions from './store/book.actions';
 
 @Component({
   selector: 'app-book',
@@ -15,6 +19,7 @@ import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
   ],
 })
 export class BookComponent implements OnInit {
+  // books$: Observable<BookDto[]> = this.store.select(BookSelectors.selectBooks);
   book = { items: [], totalCount: 0 } as PagedResultDto<BookDto>;
   selectedBook = {} as BookDto;
 
@@ -25,6 +30,7 @@ export class BookComponent implements OnInit {
   isModalOpen = false;
 
   constructor(
+    // private store: Store,
     public readonly list: ListService,
     private bookService: BookService,
     private confirmation: ConfirmationService,
@@ -32,7 +38,11 @@ export class BookComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const bookStreamCreator = (query) => this.bookService.getList(query);
+    // this.store.dispatch(BookActions.loadBooks());
+    // this.store.select(BookSelectors.selectBooks).pipe().subscribe((data: BookDto[]) => {
+    //   console.log(data)
+    // })
+    const bookStreamCreator = (query: PagedAndSortedResultRequestDto) => this.bookService.getList(query);
 
     this.list.hookToQuery(bookStreamCreator).subscribe((response) => {
       this.book = response;

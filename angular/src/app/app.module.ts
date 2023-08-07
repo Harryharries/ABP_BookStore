@@ -18,6 +18,10 @@ import { FeatureManagementModule } from '@abp/ng.feature-management';
 import { AbpOAuthModule } from '@abp/ng.oauth';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import * as bookStore from 'src/app/book/store'
+import { BookEffects } from './book/store/book.effects';
+import { appReducers } from './store';
 
 @NgModule({
   imports: [
@@ -37,8 +41,18 @@ import { EffectsModule } from '@ngrx/effects';
     ThemeLeptonXModule.forRoot(),
     SideMenuLayoutModule.forRoot(),
     FeatureManagementModule.forRoot(),
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([]),
+    // StoreDevtoolsModule.instrument({
+    //   maxAge: 25, // Retains last 25 states
+    //   logOnly: environment.production, // Restrict extension to log-only mode
+    // }),
+    // StoreModule.forRoot(appReducers),
+    // StoreModule.forFeature( bookStore.bookFeatureKey, bookStore.reducers,
+    //   {
+    //     metaReducers: bookStore.metaReducers,
+    //     initialState: bookStore.initialState
+    //   }
+    // ),
+    // EffectsModule.forRoot([BookEffects]),
   ],
   declarations: [AppComponent],
   providers: [APP_ROUTE_PROVIDER],
